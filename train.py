@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from d2l import torch as d2l
 from tinySSD import TinySSD
 from data_load import load_data
 from utils.box import *
@@ -9,15 +10,19 @@ train_iter = load_data(batch_size)
 net = TinySSD(num_classes=1)
 net = net.to('cuda')
 #训练参数设置 主函数
+
+def smooth_l1(x, sigma=1.0):
+    sigma2 = sigma ** 2
+    return torch.where(x.abs() < 1. / sigma2, 0.5 * x ** 2 * sigma2, x.abs() - 0.5 / sigma2)
+
 cls_loss = nn.CrossEntropyLoss(reduction='none')
-bbox_loss = nn.L1Loss(reduction='none')
+'''bbox_loss = nn.L1Loss(reduction='none')'''
 
 def calc_loss(cls_preds, cls_labels, bbox_preds, bbox_labels, bbox_masks):
     batch_size, num_classes = cls_preds.shape[0], cls_preds.shape[2]
     cls = cls_loss(cls_preds.reshape(-1, num_classes),
                    cls_labels.reshape(-1)).reshape(batch_size, -1).mean(dim=1)
-    bbox = bbox_loss(bbox_preds * bbox_masks,
-                     bbox_labels * bbox_masks).mean(dim=1)
+    bbox = smooth_l1((bbox_preds - bbox_labels) * bbox_masks).mean(dim=1)
     return cls + bbox
 
 def cls_eval(cls_preds, cls_labels):
@@ -43,7 +48,7 @@ class Accumulator:
     
 trainer = torch.optim.SGD(net.parameters(), lr=0.2, weight_decay=5e-4)
 
-num_epochs = 31 #20
+num_epochs = 100
 for epoch in range(num_epochs):
     print('epoch: ', epoch)
     # 训练精确度的和，训练精确度的和中的示例数
@@ -70,5 +75,5 @@ for epoch in range(num_epochs):
 
 
     # 保存模型参数
-    if epoch % 10 == 0:
-        torch.save(net.state_dict(), 'net_' + str(epoch) + '.pkl')
+    if (epoch+1) % 10 == 0:
+        torch.save(net.state_dict(), 'net_' + str(epoch+1) + '.pkl')
