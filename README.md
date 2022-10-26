@@ -75,7 +75,7 @@ pip install -r requirements.txt
   用于训练模型的代码
 - [test.py](https://github.com/Notonion/TinySSD/blob/master/test.py)
   用于测试模型的代码
--[net_60.pkl]()
+- [net_60.pkl]()
   训练得到的最好的模型
 
 
