@@ -59,7 +59,7 @@ SSD算法，其英文全名是Single Shot MultiBox Detector。SSD相较于其他
 
 ### 2.Install required packages
 
-I use Pytorch 1.8.2  and python 3.8.
+我使用的是 Pytorch 1.8.2 和 python 3.8.
 
 ```shell
 pip install -r requirements.txt
@@ -75,7 +75,7 @@ pip install -r requirements.txt
   用于训练模型的代码
 - [test.py](https://github.com/Notonion/TinySSD/blob/master/test.py)
   用于测试模型的代码
-- [net_60.pkl]()
+- [net_60.pkl](https://github.com/Notonion/TinySSD/blob/main/checkpoint/net_60.pkl)
   训练得到的最好的模型
 
 
