@@ -11,7 +11,7 @@ from utils.anchor import *
 net = TinySSD(num_classes=1)
 net = net.to('cuda')
 # 加载模型参数
-net.load_state_dict(torch.load('net_40.pkl'))
+net.load_state_dict(torch.load('checkpoint/net_40.pkl'))
 def display(img, output, threshold,name):
     fig = plt.imshow(img)
     for row in output:

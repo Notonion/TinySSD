@@ -15,12 +15,14 @@ def smooth_l1(x, sigma=1.0):
     sigma2 = sigma ** 2
     return torch.where(x.abs() < 1. / sigma2, 0.5 * x ** 2 * sigma2, x.abs() - 0.5 / sigma2)
 
-cls_loss = nn.CrossEntropyLoss(reduction='none')
-'''bbox_loss = nn.L1Loss(reduction='none')'''
+def focal_loss(gamma, x):
+    gamma=2
+    return -(1 - x) ** gamma * torch.log(x)
+
 
 def calc_loss(cls_preds, cls_labels, bbox_preds, bbox_labels, bbox_masks):
     batch_size, num_classes = cls_preds.shape[0], cls_preds.shape[2]
-    cls = cls_loss(cls_preds.reshape(-1, num_classes),
+    cls = focal_loss(cls_preds.reshape(-1, num_classes),
                    cls_labels.reshape(-1)).reshape(batch_size, -1).mean(dim=1)
     bbox = smooth_l1((bbox_preds - bbox_labels) * bbox_masks).mean(dim=1)
     return cls + bbox
