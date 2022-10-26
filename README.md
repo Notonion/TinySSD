@@ -102,7 +102,7 @@ python test.py
 
 ![R-C](R-C.jpg)
 
-## 我的改进
+## Improvement
 
 **1.将预测偏移量用到的L1范数损失替换为平滑L1范数损失。**
 
