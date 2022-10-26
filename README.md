@@ -4,7 +4,7 @@
 
 SSD算法，其英文全名是Single Shot MultiBox Detector。SSD相较于其他算法的改进有：1、SSD提取了不同尺度的特征图来做检测，大尺度特征图（较靠前的特征图）可以用来检测小物体，而小尺度特征图（较靠后的特征图）用来检测大物体；2、SSD采用了不同尺度和长宽比的先验框。
 
-![image-20221026164713575](C:\Users\14438\AppData\Roaming\Typora\typora-user-images\image-20221026164713575.png)
+![image-20221026164713575](https://camo.githubusercontent.com/83075abd095eb72e0128d2fffda781afbd8849864ad72a2fa1d596f9dd1f951d/68747470733a2f2f696d672e656e6465726667612e636e2f696d672f696d6167652d32303232313031383133333433313937332e706e67)
 
 ## Dataset
 
